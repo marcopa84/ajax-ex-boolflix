@@ -27,6 +27,7 @@ function filmSearch() {
 }
 
 function filmPrint(array) {
+  $('.films_list').text('');
   var source = document.getElementById("entry_film").innerHTML;
   var template = Handlebars.compile(source);
   for (var i = 0; i < array.length; i++) {
