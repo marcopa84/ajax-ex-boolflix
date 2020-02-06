@@ -25,19 +25,26 @@
     </header>
     <main>
       <ul class="films_list">
-        
+
       </ul>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam consequatur, molestias provident vel. Modi quas delectus, atque unde sequi, porro quos qui harum facere magni, id eum quae adipisci cupiditate.
     </main>
   </div>
   <script id="entry_film" type="text/x-handlebars-template">
   <li class="entry_film">
+    <img src="{{image_src}}" alt="">
     <p>{{title}}</p>
     <p>{{original_title}}</p>
     <p>{{original_language}}</p>
     <p>{{vote_average}}</p>
   </li>
-</script>
+  </script>
+  <script id="modal" type="text/x-handlebars-template">
+    <div class="modal">
+      <h1>{{error}}</h1>
+      <button id="modal_btn">Chiudi</button>
+    </div>
+  </script>
   <script src="js/script.js" charset="utf-8"></script>
 </body>
 </html>
