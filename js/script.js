@@ -5,6 +5,13 @@ $(document).ready(function() {
   $(document).on('click', '#modal_btn', function () {
     $('.modal').remove();
   });
+  $('#search_val').keypress(
+      function () {
+        if (event.which == 13 || event.keyCode == 13){
+          filmSearch();
+        }
+      }
+    );
 });
 
 
