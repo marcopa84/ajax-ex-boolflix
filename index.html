@@ -15,8 +15,7 @@
 <body>
   <div class="wrapper">
     <header>
-      <div class="logo">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      <div class="logo">BOOLFLIX
       </div>
       <div class="search">
         <input type="text" id="search_val">
@@ -24,19 +23,26 @@
       </div>
     </header>
     <main>
+      <div class="start">
+        <h2>
+          Benvenuto!
+        </h2>
+        <h4>
+          Scrivi il titolo di un film nel campo in alto a destra e vedi la lista dei film!
+        </h4>
+      </div>
       <ul class="films_list">
 
       </ul>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam consequatur, molestias provident vel. Modi quas delectus, atque unde sequi, porro quos qui harum facere magni, id eum quae adipisci cupiditate.
     </main>
   </div>
   <script id="entry_film" type="text/x-handlebars-template">
   <li class="entry_film">
     <img src="{{image_src}}" alt="">
-    <p>{{title}}</p>
-    <p>{{original_title}}</p>
-    <p>{{original_language}}</p>
-    <p>{{vote_average}}</p>
+    <h1>{{title}}</h1>
+    <h2>{{original_title}}</h2>
+    <h5>{{original_language}}</h5>
+    <h4>{{vote_average}}</h4>
   </li>
   </script>
   <script id="modal" type="text/x-handlebars-template">

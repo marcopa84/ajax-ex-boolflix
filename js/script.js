@@ -9,6 +9,7 @@ $(document).ready(function() {
 
 
 function filmSearch() {
+  $('.start').remove();
   var searchVal = $('#search_val').val().toLowerCase();
   console.log(searchVal);
   if (searchVal.length != 0) {
