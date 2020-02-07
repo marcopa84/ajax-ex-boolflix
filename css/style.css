@@ -12,23 +12,19 @@ header{
   height: 80px;
   display: flex;
   background: #141414;
+  justify-content: space-around;
 }
 header .search{
-  width: 750px;
+  width: 40%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 .search button{
   margin: 0 20px;
 }
 header .logo{
-  display: flex;
-  align-items: center;
-  width: calc(100% - 750px);
-  color: rgb(192, 20, 18);
-  font-size: 35px;
-  font-weight: 700;
+
 }
 main{
   height: calc(100% - 80px);
