@@ -30,6 +30,20 @@ main{
   height: calc(100% - 80px);
   overflow-y: auto;
 }
+.error_dialog{
+  background: #DC1A28;
+  height: 50px;
+  width: 100%;
+  display: none;
+  line-height: 50px;
+  vertical-align: middle;
+  text-align: center;
+}
+.error_dialog span{
+  margin: 0 50px;
+  font-weight: 700;
+  color: white;
+}
 .start{
   width: 100%;
   height: 100%;
@@ -39,7 +53,14 @@ main{
   align-items: center;
   color: rgb(192, 20, 18);
 }
-.films_list{
+.start h2{
+  font-size: 59px;
+}
+.start h3{
+  width: 40%;
+  font-size: 45px;
+}
+.results_list{
   width: 100%;
   background: white;
   display: flex;
@@ -52,12 +73,13 @@ main{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   width: 400px;
   padding: 15px;
   margin: 25px;
-  background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, 0.2);
   list-style: none;
-  text-align: center;
+  box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
 }
 .entry_film .image{
   width: 350px;
@@ -72,11 +94,18 @@ main{
 .entry_film .description{
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: flex-end;
+  text-align: center;
+  width: 350px;
+}
+.entry_film .description h4{
+  padding-top:  15px;
 }
 .description_small{
   display: flex;
   justify-content: space-between;
+  align-self: stretch;
   padding-top:  15px;
 }
 #rating img{

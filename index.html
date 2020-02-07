@@ -22,40 +22,53 @@
       </div>
     </header>
     <main>
+      <div class="error_dialog">
+
+      </div>
       <div class="start">
         <h2>
           Benvenuto!
         </h2>
-        <h4>
+        <h3>
           Scrivi il titolo di un film nel campo in alto a destra e vedi la lista dei film!
-        </h4>
+        </h3>
       </div>
-      <ul class="films_list">
+      <ul class="results_list">
 
       </ul>
     </main>
   </div>
+  <!-- elemento della lista -->
   <script id="entry_film" type="text/x-handlebars-template">
   <li class="entry_film">
     <div class="image">
-      <img src="{{image_src}}" alt="">
+      <img src="{{image_src}}" alt="Image not available">
     </div>
     <div class="description">
       <h1>{{title}}</h1>
       <h4>{{original_title}}</h4>
       <div class="description_small">
-        <span><img src="https://www.countryflags.io/{{original_language}}/shiny/24.png"></span>
+        <span>
+          <img src="https://www.countryflags.io/{{original_language}}/shiny/24.png">
+        </span>
+        <span>{{gender}}</span>
         <span id="rating">{{{vote_average}}}</span>
       </div>
     </div>
   </li>
   </script>
+  <!-- errore con finestra modale -->
   <script id="modal" type="text/x-handlebars-template">
     <div class="modal">
       <h1>{{error}}</h1>
       <button id="modal_btn">Chiudi</button>
     </div>
   </script>
+  <!-- errore con slide -->
+  <script id="error_dialog" type="text/x-handlebars-template">
+    <span>{{error}}</span>
+  </script>
+
   <script src="js/script.js" charset="utf-8"></script>
 </body>
 </html>
