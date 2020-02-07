@@ -61,22 +61,40 @@ function filmSearch() {
 }
 
 function filmPrint(array) {
+  // svuoto i campi
   $('.films_list').text('');
-  // var source = document.getElementById("entry_film").innerHTML;
+  $('#search_val').val('');
+  // clono il <li>
   var source = $('#entry_film').html();
   var template = Handlebars.compile(source);
+
+  // ciclo
   for (var i = 0; i < array.length; i++) {
     var film = array[i];
-
+    // variabile lingua per compatibilità richiamo bandiere
+    var language = film.original_language;
+    if (language == 'en') {
+      language = 'gb';
+      console.log('england');
+    }
+    // variabile votazione
+    var stars = Math.ceil(film.vote_average/2);
+    var stars_print = '<img src="img/star.png">';
+    var stars_print_result = '';
+    for (var s = 0; s < stars; s++) {
+      stars_print_result = stars_print_result + stars_print
+      // $(this).find('#rating').append(stars_print);
+    }
+    // popolo il <li>
     var context = {
-      image_src: 'https://image.tmdb.org/t/p/w500/'+film.poster_path,
+      image_src: 'https://image.tmdb.org/t/p/w342/'+film.poster_path,
       title: film.title,
       original_title: film.original_title,
-      original_language: film.original_language,
-      vote_average: film.vote_average
+      original_language: language,
+      vote_average: stars_print_result,
      };
+     // appendo il <li> popolato
     var html = template(context);
     $('.films_list').append(html);
-    console.log(film);
   }
 }

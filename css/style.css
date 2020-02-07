@@ -44,16 +44,44 @@ main{
   background: white;
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  /* align-items: flex-start; */
+  align-items: stretch;
   flex-wrap: wrap;
 }
-.films_list li{
+.entry_film{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 400px;
   padding: 15px;
   margin: 25px;
   background: rgba(0, 0, 0, .2);
   list-style: none;
   text-align: center;
-
+}
+.entry_film .image{
+  width: 350px;
+  height: 500px;
+  text-align: center;
+}
+.entry_film .image img{
+  height: 100%;
+  line-height: 500px;
+  vertical-align: middle;
+}
+.entry_film .description{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.description_small{
+  display: flex;
+  justify-content: space-between;
+  padding-top:  15px;
+}
+#rating img{
+  width: 24px;
+  height: 24px;
 }
 .modal{
   position: fixed;

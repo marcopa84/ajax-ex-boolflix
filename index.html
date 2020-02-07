@@ -37,11 +37,17 @@
   </div>
   <script id="entry_film" type="text/x-handlebars-template">
   <li class="entry_film">
-    <img src="{{image_src}}" alt="">
-    <h1>{{title}}</h1>
-    <h2>{{original_title}}</h2>
-    <h5>{{original_language}}</h5>
-    <h4>{{vote_average}}</h4>
+    <div class="image">
+      <img src="{{image_src}}" alt="">
+    </div>
+    <div class="description">
+      <h1>{{title}}</h1>
+      <h4>{{original_title}}</h4>
+      <div class="description_small">
+        <span><img src="https://www.countryflags.io/{{original_language}}/shiny/24.png"></span>
+        <span id="rating">{{{vote_average}}}</span>
+      </div>
+    </div>
   </li>
   </script>
   <script id="modal" type="text/x-handlebars-template">
