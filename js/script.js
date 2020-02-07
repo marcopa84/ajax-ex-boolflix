@@ -58,7 +58,7 @@ function search() {
             var html = template(context);
             $('.error_dialog').append(html);
           }else {
-            filmPrint(filmArray);
+            elementPrint(filmArray);
           }
         },
         error : function(error) {
@@ -88,7 +88,7 @@ function search() {
             var html = template(context);
             $('.error_dialog').append(html);
           }else {
-            tvPrint(tvArray);
+            elementPrint(tvArray);
           }
         },
         error : function(error) {
@@ -108,24 +108,24 @@ function search() {
   }
 
 }
-// stampa films
-function filmPrint(array) {
+// stampa elementi
+function elementPrint(array) {
   // clono il <li>
   var source = $('#entry_film').html();
   var template = Handlebars.compile(source);
 
   // ciclo
   for (var i = 0; i < array.length; i++) {
-    var film = array[i];
+    var element = array[i];
     // variabile lingua per compatibilità richiamo bandiere
-    var language = film.original_language;
+    var language = element.original_language;
     if (language == 'en') {
       language = 'gb';
     }else if (language == 'ja') {
       language = 'jp';
     }
     // variabile votazione
-    var stars = Math.ceil(film.vote_average/2);
+    var stars = Math.ceil(element.vote_average/2);
     var stars_print = '<img src="img/star.png">';
     var stars_print_result = '';
     for (var s = 0; s < stars; s++) {
@@ -133,48 +133,10 @@ function filmPrint(array) {
     }
     // popolo il <li>
     var context = {
-      image_src: 'https://image.tmdb.org/t/p/w342/'+film.poster_path,
-      title: film.title,
-      original_title: film.original_title,
+      image_src: 'https://image.tmdb.org/t/p/w342/'+element.poster_path,
+      title: element.title || element.name,
+      original_title: element.original_title || element.name,
       original_language: language,
-      gender : 'Film',
-      vote_average: stars_print_result,
-     };
-     // appendo il <li> popolato
-    var html = template(context);
-    $('.results_list').append(html);
-  }
-}
-// stampa serie tv
-function tvPrint(array) {
-  // clono il <li>
-  var source = $('#entry_film').html();
-  var template = Handlebars.compile(source);
-
-  // ciclo
-  for (var i = 0; i < array.length; i++) {
-    var tv = array[i];
-    // variabile lingua per compatibilità richiamo bandiere
-    var language = tv.original_language;
-    if (language == 'en') {
-      language = 'gb';
-    }else if (language == 'ja') {
-      language = 'jp';
-    }
-    // variabile votazione
-    var stars = Math.ceil(tv.vote_average/2);
-    var stars_print = '<img src="img/star.png">';
-    var stars_print_result = '';
-    for (var s = 0; s < stars; s++) {
-      stars_print_result = stars_print_result + stars_print
-    }
-    // popolo il <li>
-    var context = {
-      image_src: 'https://image.tmdb.org/t/p/w342/'+tv.poster_path,
-      title: tv.name,
-      original_title: tv.name,
-      original_language: language,
-      gender : 'TV serie',
       vote_average: stars_print_result,
      };
      // appendo il <li> popolato
