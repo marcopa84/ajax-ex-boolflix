@@ -33,6 +33,13 @@ $(document).ready(function() {
     var type = $(this).parents('li').attr('data_type');
     searchCast(elementCast, type, id_film);
   });
+  //generazione filtri
+  $(document).on('click', '#filter_btn', function () {
+    $('.filters_select').toggle();
+    $('#genres').html('');
+    getGenres('movie');
+    getGenres('tv');
+  });
 
 });
 
@@ -42,7 +49,6 @@ function search() {
   var source = $('#error_dialog').html();
   var template = Handlebars.compile(source);
   var searchVal = $('#search_val').val().toLowerCase();
-  console.log(searchVal);
   if (searchVal.length != 0) {
     // ricerca films
     $.ajax(
@@ -121,7 +127,6 @@ function searchCast(thisElement, type, id) {
   var template = Handlebars.compile(source);
   $.ajax(
     {
-      // url : 'https://api.themoviedb.org/3/movie/4556/credits',
       url : 'https://api.themoviedb.org/3/'+type+'/'+id+'/credits',
       method: 'GET',
       data : {
@@ -155,10 +160,45 @@ function searchCast(thisElement, type, id) {
     }
   );
 }
-
-
-
-
+function getGenres(type) {
+  var genres = [];
+  var source = $('#entry_select').html();
+  var template = Handlebars.compile(source);
+  $.ajax(
+    {
+      url : 'https://api.themoviedb.org/3/genre/'+type+'/list',
+      method: 'GET',
+      data : {
+        api_key : 'f4cb5d5e967d170cb7a067b541e15041',
+      },
+      success : function (data) {
+        var array = data.genres
+        for (var i = 0; i < array.length; i++) {
+          if (!genres.includes(array[i])) {
+            genres.push(array[i]);
+            var context = {
+              value_id : array[i].id,
+              value: array[i].name,
+             };
+            var html = template(context);
+            $('#genres').append(html);
+          }
+        }
+      },
+      error : function(error) {
+        $('.error_dialog').slideDown();
+        var context = {
+          error: 'Nessun genere al momento disponibile in'+' '+ type,
+         };
+        var html = template(context);
+        $('.error_dialog').append(html);
+        console.log(error);
+      }
+    }
+  );
+ return genres;
+ console.log(genres);
+}
 // stampa elementi
 function elementPrint(type, array) {
   // clono il <li>

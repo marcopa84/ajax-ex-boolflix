@@ -24,6 +24,14 @@
         <input type="text" id="search_val">
         <button type="button" name="button" id="search_btn">Cerca</button>
       </div>
+      <div class="filters">
+        <button type="button" name="button" id="filter_btn">Filter</button>
+        <div class="filters_select">
+          <label for="genres">Choose a Genres:</label>
+          <select id="genres">
+          </select>
+        </div>
+      </div>
     </header>
     <main>
       <div class="error_dialog">
@@ -54,8 +62,7 @@
         <li>Titolo: <span>{{title}}</span></li>
         <li>Titolo originale: <span>{{original_title}}</span></li>
         <li id="overview">Riassunto: <span>{{overview}}</span></li>
-        <li>Linguaggio: <img src="https://www.countryflags.io/{{original_language}}/shiny/24.png"></li>
-        <li>Genere: {{gender}}</li>
+        <li>Linguaggio: <img class="language_flag" src="https://www.countryflags.io/{{original_language}}/shiny/24.png"></li>
         <li>Votazione: <span id="rating">{{{vote_average}}}</span></li>
       </ul>
       <button id="search_cast_btn">Cast</button>
@@ -70,6 +77,10 @@
   <li class="entry_cast">
     <img src="{{img_src}}" alt=""><span>{{name}}{{character}}</span>
   </li>
+  </script>
+  <!-- elementi del select -->
+  <script id="entry_select" type="text/x-handlebars-template">
+    <option value="{{value_id}}">{{value}}</option>
   </script>
 
   <!-- errore con finestra modale -->
