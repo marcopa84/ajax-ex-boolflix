@@ -37,8 +37,7 @@ $(document).ready(function() {
   $(document).on('click', '#filter_btn', function () {
     $('.filters_select').toggle();
     $('#genres').html('');
-    getGenres('movie');
-    getGenres('tv');
+    getGenres1();
   });
 
 });
@@ -160,30 +159,23 @@ function searchCast(thisElement, type, id) {
     }
   );
 }
-function getGenres(type) {
+function getGenres1() {
   var genres = [];
-  var source = $('#entry_select').html();
-  var template = Handlebars.compile(source);
   $.ajax(
     {
-      url : 'https://api.themoviedb.org/3/genre/'+type+'/list',
+      url : 'https://api.themoviedb.org/3/genre/movie/list',
       method: 'GET',
       data : {
         api_key : 'f4cb5d5e967d170cb7a067b541e15041',
       },
       success : function (data) {
-        var array = data.genres
-        for (var i = 0; i < array.length; i++) {
-          if (!genres.includes(array[i])) {
-            genres.push(array[i]);
-            var context = {
-              value_id : array[i].id,
-              value: array[i].name,
-             };
-            var html = template(context);
-            $('#genres').append(html);
+        var array1 = data.genres
+        for (var i = 0; i < array1.length; i++) {
+          if (!genres.includes(array1[i].id)) {
+            genres.push(array1[i]);
           }
         }
+        getGenres2(genres);
       },
       error : function(error) {
         $('.error_dialog').slideDown();
@@ -196,9 +188,50 @@ function getGenres(type) {
       }
     }
   );
- return genres;
- console.log(genres);
 }
+function getGenres2(genres) {
+  $.ajax(
+    {
+      url : 'https://api.themoviedb.org/3/genre/movie/list',
+      method: 'GET',
+      data : {
+        api_key : 'f4cb5d5e967d170cb7a067b541e15041',
+      },
+      success : function (data) {
+        var array2 = data.genres
+        for (var i = 0; i < array2.length; i++) {
+          if (!genres.includes(array2[i].id)) {
+            genres.push(array2[i]);
+          }
+        }
+        printGenres(genres);
+      },
+      error : function(error) {
+        $('.error_dialog').slideDown();
+        var context = {
+          error: 'Nessun genere al momento disponibile in'+' '+ type,
+         };
+        var html = template(context);
+        $('.error_dialog').append(html);
+        console.log(error);
+      }
+    }
+  );
+}
+function printGenres(genres) {
+  console.log(genres);
+  var source = $('#entry_select').html();
+  var template = Handlebars.compile(source);
+  for (var i = 0; i < genres.length; i++) {
+    var context = {
+      value_id : genres[i].id,
+      value: genres[i].name,
+     };
+    var html = template(context);
+    $('#genres').append(html);
+  }
+}
+
 // stampa elementi
 function elementPrint(type, array) {
   // clono il <li>

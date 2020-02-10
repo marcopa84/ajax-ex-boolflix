@@ -33,9 +33,10 @@ header .filters{
   top: 80px;
   right: 0;
   width: 100%;
-  height: 200px; /* DEBUG:  */
-  line-height: 200px;
+  height: 150px; /* DEBUG:  */
+  line-height: 150px;
   vertical-align: middle;
+  text-align: center;
   border: 1px solid black;
   display: none;
 
