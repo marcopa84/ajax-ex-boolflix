@@ -1,21 +1,12 @@
 $(document).ready(function() {
-
+  // Ricerca con bottone
   $(document).on('click', '#search_btn', function () {
     $('.error_dialog').slideUp();
     $('.error_dialog').html('');
     search();
     clean();
   });
-
-  $(document).on('click', '#modal_btn', function () {
-    $('.modal').remove();
-  });
-
-  $(document).on('click', 'body', function () {
-    $('.error_dialog').slideUp();
-    $('.error_dialog').html('');
-  });
-
+  // ricerca con invio
   $('#search_val').keypress(    function () {
       if (event.which == 13 || event.keyCode == 13){
         $('.error_dialog').slideUp();
@@ -25,9 +16,24 @@ $(document).ready(function() {
       }
     }
   );
+  // chiusura finestra modale
+  $(document).on('click', '#modal_btn', function () {
+    $('.modal').remove();
+  });
+  // chiusura errori
+  $(document).on('click', 'body', function () {
+    $('.error_dialog').slideUp();
+    $('.error_dialog').html('');
+  });
+  // ricerca cast
+  $(document).on('click', '#search_cast_btn', function () {
+    // searchCast(4556);
+    var id_film = $(this).parents('li').attr('data_id');
+    console.log(id_film);
+    searchCast(id_film);
+  });
 
 });
-
 
 function search() {
   $('.start').remove();
@@ -108,6 +114,48 @@ function search() {
   }
 
 }
+function searchCast(id) {
+  $.ajax(
+    {
+      // url : 'https://api.themoviedb.org/3/movie/4556/credits',
+      url : 'https://api.themoviedb.org/3/movie/'+id+'/credits',
+      method: 'GET',
+      data : {
+        api_key : 'f4cb5d5e967d170cb7a067b541e15041',
+      },
+      success : function (data) {
+        console.log(data);
+        var castArray = data.cast;
+        console.log(castArray);
+        // gestisco errori
+        if (castArray.length == 0) {
+          $('.error_dialog').slideDown();
+          var context = {
+            error: 'Il cast di questo elemento non è disponibile.'
+           };
+          var html = template(context);
+          $('.error_dialog').append(html);
+        }else {
+          castPrint(castArray);
+        }
+      },
+      error : function(error) {
+        alert('errore', error);
+        console.log(error);
+        $('.error_dialog').slideDown();
+        var context = {
+          error: 'Il cast di questo elemento non è disponibile.'+error.status_message,
+         };
+        var html = template(context);
+        $('.error_dialog').append(html);
+      }
+    }
+  );
+}
+
+
+
+
 // stampa elementi
 function elementPrint(type, array) {
   // clono il <li>
@@ -125,13 +173,14 @@ function elementPrint(type, array) {
       language = 'jp';
     }
     var image_src = 'https://image.tmdb.org/t/p/w342/'+element.poster_path;
-    console.log(element.poster_path);
-    console.log('null')
+
     // Gestisco immagine 'null'
     if (element.poster_path == null) {
       image_src = 'img/sorry-image-not-available.jpg'
-    }
+    };
+
     var context = {
+      id: element.id,
       image_src: image_src,
       title: element.title || element.name,
       original_title: element.original_title || element.name,
@@ -145,12 +194,28 @@ function elementPrint(type, array) {
     $('.results_list').append(html);
   }
 }
-// creazione votazione
+// stampa element cast
+function castPrint(array) {
+  // clono il <li>
+  var source = $('#entry_cast').html();
+  var template = Handlebars.compile(source);
 
+  // ciclo
+  for (var i = 0; i < 5; i++) {
+    var element = array[i];
+    var context = {
+      name : element.name,
+      character : ' nel personaggio di ' + element.character,
+     };
+     // appendo il <li> popolato
+    var html = template(context);
+    $('.description_cast').append(html);
+  }
+}
+// creazione votazione
 function printStars (num) {
   num = Math.ceil(num / 2);
   var string = '';
-
   for (var i = 1; i <= 5; i++) {
     if(i <= num ) {
       string += '<i class="fas fa-star"></i>';
@@ -158,7 +223,6 @@ function printStars (num) {
       string += '<i class="far fa-star"></i>';
     }
   }
-
   return string
 }
 // pulizia risultati

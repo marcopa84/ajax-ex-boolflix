@@ -44,21 +44,31 @@
   </div>
   <!-- elemento della lista -->
   <script id="entry_film" type="text/x-handlebars-template">
-  <li class="entry_film">
+  <li class="entry_film" data_id={{id}}>
     <div class="image">
       <img src="{{image_src}}" alt="">
     </div>
     <h1>{{title}}</h1>
-
     <div class="description">
       <ul class="description_list">
+        <li>Titolo: <span>{{title}}</span></li>
         <li>Titolo originale: <span>{{original_title}}</span></li>
         <li id="overview">Riassunto: <span>{{overview}}</span></li>
         <li>Linguaggio: <img src="https://www.countryflags.io/{{original_language}}/shiny/24.png"></li>
         <li>Genere: {{gender}}</li>
         <li>Votazione: <span id="rating">{{{vote_average}}}</span></li>
       </ul>
+      <button id="search_cast_btn">Cast</button>
+      <ul class="description_cast">
+
+      </ul>
     </div>
+  </li>
+  </script>
+  <!-- elementi del cast -->
+  <script id="entry_cast" type="text/x-handlebars-template">
+  <li class="entry_cast">
+    <span>{{name}}{{character}}</span>
   </li>
   </script>
 
