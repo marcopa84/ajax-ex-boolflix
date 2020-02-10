@@ -125,8 +125,10 @@ function elementPrint(type, array) {
       language = 'jp';
     }
     var image_src = 'https://image.tmdb.org/t/p/w342/'+element.poster_path;
+    console.log(element.poster_path);
+    console.log('null')
     // Gestisco immagine 'null'
-    if (element.poster_path != 'string') {
+    if (element.poster_path == null) {
       image_src = 'img/sorry-image-not-available.jpg'
     }
     var context = {
