@@ -30,6 +30,10 @@ main{
   overflow-y: auto;
 }
 .error_dialog{
+  position: fixed;
+  top:80px;
+  left: 0;
+  z-index: 2;
   background: #DC1A28;
   height: 50px;
   width: 100%;

@@ -27,10 +27,10 @@ $(document).ready(function() {
   });
   // ricerca cast
   $(document).on('click', '#search_cast_btn', function () {
-    // searchCast(4556);
+    $('.description_cast').html('');
     var id_film = $(this).parents('li').attr('data_id');
-    console.log(id_film);
-    searchCast(id_film);
+    var elementCast = $(this);
+    searchCast(elementCast, id_film);
   });
 
 });
@@ -114,7 +114,10 @@ function search() {
   }
 
 }
-function searchCast(id) {
+function searchCast(thisElement, id) {
+  // preparo il messaggio di errore, nel caso servisse
+  var source = $('#error_dialog').html();
+  var template = Handlebars.compile(source);
   $.ajax(
     {
       // url : 'https://api.themoviedb.org/3/movie/4556/credits',
@@ -136,18 +139,17 @@ function searchCast(id) {
           var html = template(context);
           $('.error_dialog').append(html);
         }else {
-          castPrint(castArray);
+          castPrint(thisElement, castArray);
         }
       },
       error : function(error) {
-        alert('errore', error);
-        console.log(error);
         $('.error_dialog').slideDown();
         var context = {
-          error: 'Il cast di questo elemento non è disponibile.'+error.status_message,
+          error: 'Il cast di questo elemento non è disponibile.',
          };
         var html = template(context);
         $('.error_dialog').append(html);
+        console.log(error);
       }
     }
   );
@@ -195,7 +197,7 @@ function elementPrint(type, array) {
   }
 }
 // stampa element cast
-function castPrint(array) {
+function castPrint(thisElement, array) {
   // clono il <li>
   var source = $('#entry_cast').html();
   var template = Handlebars.compile(source);
@@ -209,7 +211,7 @@ function castPrint(array) {
      };
      // appendo il <li> popolato
     var html = template(context);
-    $('.description_cast').append(html);
+    $(thisElement).siblings('.description_cast').append(html);
   }
 }
 // creazione votazione
