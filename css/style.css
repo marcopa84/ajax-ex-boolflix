@@ -23,23 +23,18 @@ header .search{
 }
 header .filters{
   width: 20%;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .filters_select{
-  position: absolute;
-  top: 80px;
-  right: 0;
-  width: 100%;
-  height: 150px; /* DEBUG:  */
-  line-height: 150px;
-  vertical-align: middle;
-  text-align: center;
-  border: 1px solid black;
   display: none;
-
+  width: 15%;
+  justify-content: center;
+  align-items: center;
+}
+.active_filters_select{
+  display: flex;
 }
 .search button{
   margin: 0 20px;

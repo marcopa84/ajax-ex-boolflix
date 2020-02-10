@@ -35,9 +35,27 @@ $(document).ready(function() {
   });
   //generazione filtri
   $(document).on('click', '#filter_btn', function () {
-    $('.filters_select').toggle();
-    $('#genres').html('');
     getGenres1();
+    $('.filters_select').addClass('active_filters_select');
+    $('#genres').html('');
+    $('#genres').html('<option value=" ">All</option>');
+  });
+  $('#genres').change(function() {
+
+    var genresSelected = $(this).val();
+    // $('.entry_film').hide();
+
+    $('.entry_film').each(function() {
+      var genre = $(this).attr('data_genres');
+      console.log(genre);
+      if (genre != genresSelected) {
+        $(this).hide();
+      }else{
+        $(this).show();
+      }
+      ;
+    });
+
   });
 
 });
@@ -159,6 +177,7 @@ function searchCast(thisElement, type, id) {
     }
   );
 }
+// creazione generi
 function getGenres1() {
   var genres = [];
   $.ajax(
@@ -171,9 +190,7 @@ function getGenres1() {
       success : function (data) {
         var array1 = data.genres
         for (var i = 0; i < array1.length; i++) {
-          if (!genres.includes(array1[i].id)) {
             genres.push(array1[i]);
-          }
         }
         getGenres2(genres);
       },
@@ -192,19 +209,33 @@ function getGenres1() {
 function getGenres2(genres) {
   $.ajax(
     {
-      url : 'https://api.themoviedb.org/3/genre/movie/list',
+      url : 'https://api.themoviedb.org/3/genre/tv/list',
       method: 'GET',
       data : {
         api_key : 'f4cb5d5e967d170cb7a067b541e15041',
       },
       success : function (data) {
         var array2 = data.genres
+        // for (var i = 0; i < array2.length; i++) {
+        //   if (!genres.includes(array2[i].id)) {
+        //     genres.push(array2[i]);
+        //   }
+        // }
         for (var i = 0; i < array2.length; i++) {
-          if (!genres.includes(array2[i].id)) {
-            genres.push(array2[i]);
+          var element = array2[i]
+          var find= false;
+          for (var j = 0; j < genres.length; j++) {
+            if (element.id == genres[j].id) {
+              find = true;
+            }
+          }
+          if (!find) {
+            genres.push(element);
           }
         }
+        // console.log(genres);
         printGenres(genres);
+        return (genres);
       },
       error : function(error) {
         $('.error_dialog').slideDown();
@@ -218,6 +249,7 @@ function getGenres2(genres) {
     }
   );
 }
+// popolamento generi select
 function printGenres(genres) {
   console.log(genres);
   var source = $('#entry_select').html();
@@ -258,6 +290,7 @@ function elementPrint(type, array) {
     var context = {
       id: element.id,
       type: type,
+      genres_ids: element.genre_ids,
       image_src: image_src,
       title: element.title || element.name,
       original_title: element.original_title || element.name,

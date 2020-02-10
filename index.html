@@ -26,11 +26,11 @@
       </div>
       <div class="filters">
         <button type="button" name="button" id="filter_btn">Filter</button>
-        <div class="filters_select">
-          <label for="genres">Choose a Genres:</label>
-          <select id="genres">
-          </select>
-        </div>
+      </div>
+      <div class="filters_select">
+        <select id="genres">
+          <option value=" ">All</option>
+        </select>
       </div>
     </header>
     <main>
@@ -52,7 +52,7 @@
   </div>
   <!-- elemento della lista -->
   <script id="entry_film" type="text/x-handlebars-template">
-  <li class="entry_film" data_id={{id}} data_type={{type}}>
+  <li class="entry_film" data_id={{id}} data_type={{type}} data_genres={{genres_ids}}>
     <div class="image">
       <img src="{{image_src}}" alt="">
     </div>
