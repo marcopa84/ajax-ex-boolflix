@@ -125,25 +125,43 @@ function elementPrint(array) {
       language = 'jp';
     }
     // variabile votazione
-    var stars = Math.ceil(element.vote_average/2);
-    var stars_print = '<img src="img/star.png">';
-    var stars_print_result = '';
-    for (var s = 0; s < stars; s++) {
-      stars_print_result = stars_print_result + stars_print
-    }
+    // var stars = Math.ceil(element.vote_average/2);
+    // var stars_print = '<img src="img/star.png">';
+    // var stars_print_result = '';
+    // for (var s = 0; s < stars; s++) {
+    //   stars_print_result = stars_print_result + stars_print
+    // }
     // popolo il <li>
     var context = {
       image_src: 'https://image.tmdb.org/t/p/w342/'+element.poster_path,
       title: element.title || element.name,
       original_title: element.original_title || element.name,
       original_language: language,
-      vote_average: stars_print_result,
+      overview: element.overview,
+      vote_average: printStars(element.vote_average),
      };
      // appendo il <li> popolato
     var html = template(context);
     $('.results_list').append(html);
   }
 }
+// creazione votazione
+
+function printStars (num) {
+  num = Math.ceil(num / 2);
+  var string = '';
+
+  for (var i = 1; i <= 5; i++) {
+    if(i <= num ) {
+      string += '<i class="fas fa-star"></i>';
+    } else {
+      string += '<i class="far fa-star"></i>';
+    }
+  }
+
+  return string
+}
+// pulizia risultati
 function clean() {
   // svuoto i campi
   $('.results_list').text('');

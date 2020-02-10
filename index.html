@@ -8,6 +8,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.3/handlebars.min.js" integrity="sha256-/PJBs6QWvXijOFIX04kZpLb6ZtSQckdOIavLWKKOgXU=" crossorigin="anonymous"></script>
   <!-- Jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- FontAwsome -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
+  <!-- font -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
   <!-- css -->
   <link rel="stylesheet" href="css/style.css">
   <title>Boolflix</title>
@@ -15,7 +19,7 @@
 <body>
   <div class="wrapper">
     <header>
-      <img src="https://fontmeme.com/permalink/200207/0f045a4dd0b66989da121eef5e270db7.png" alt="" class="logo">
+      <img src="img/logo.png" alt="" class="logo">
       <div class="search">
         <input type="text" id="search_val">
         <button type="button" name="button" id="search_btn">Cerca</button>
@@ -44,19 +48,20 @@
     <div class="image">
       <img src="{{image_src}}" alt="Image not available">
     </div>
+    <h1>{{title}}</h1>
+
     <div class="description">
-      <h1>{{title}}</h1>
-      <h4>{{original_title}}</h4>
-      <div class="description_small">
-        <span>
-          <img src="https://www.countryflags.io/{{original_language}}/shiny/24.png">
-        </span>
-        <span>{{gender}}</span>
-        <span id="rating">{{{vote_average}}}</span>
-      </div>
+      <ul class="description_list">
+        <li>Titolo originale: <span>{{original_title}}</span></li>
+        <li id="overview">Riassunto: <span>{{overview}}</span></li>
+        <li>Linguaggio: <img src="https://www.countryflags.io/{{original_language}}/shiny/24.png"></li>
+        <li>Genere: {{gender}}</li>
+        <li>Votazione: <span id="rating">{{{vote_average}}}</span></li>
+      </ul>
     </div>
   </li>
   </script>
+
   <!-- errore con finestra modale -->
   <script id="modal" type="text/x-handlebars-template">
     <div class="modal">
