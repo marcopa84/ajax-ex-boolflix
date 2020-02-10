@@ -58,7 +58,7 @@ function search() {
             var html = template(context);
             $('.error_dialog').append(html);
           }else {
-            elementPrint(filmArray);
+            elementPrint('Film',filmArray);
           }
         },
         error : function(error) {
@@ -88,7 +88,7 @@ function search() {
             var html = template(context);
             $('.error_dialog').append(html);
           }else {
-            elementPrint(tvArray);
+            elementPrint('Serie TV', tvArray);
           }
         },
         error : function(error) {
@@ -109,7 +109,7 @@ function search() {
 
 }
 // stampa elementi
-function elementPrint(array) {
+function elementPrint(type, array) {
   // clono il <li>
   var source = $('#entry_film').html();
   var template = Handlebars.compile(source);
@@ -124,19 +124,17 @@ function elementPrint(array) {
     }else if (language == 'ja') {
       language = 'jp';
     }
-    // variabile votazione
-    // var stars = Math.ceil(element.vote_average/2);
-    // var stars_print = '<img src="img/star.png">';
-    // var stars_print_result = '';
-    // for (var s = 0; s < stars; s++) {
-    //   stars_print_result = stars_print_result + stars_print
-    // }
-    // popolo il <li>
+    var image_src = 'https://image.tmdb.org/t/p/w342/'+element.poster_path;
+    // Gestisco immagine 'null'
+    if (element.poster_path != 'string') {
+      image_src = 'img/sorry-image-not-available.jpg'
+    }
     var context = {
-      image_src: 'https://image.tmdb.org/t/p/w342/'+element.poster_path,
+      image_src: image_src,
       title: element.title || element.name,
       original_title: element.original_title || element.name,
       original_language: language,
+      gender: type,
       overview: element.overview,
       vote_average: printStars(element.vote_average),
      };
