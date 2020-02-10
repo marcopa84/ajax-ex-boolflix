@@ -44,7 +44,7 @@
   </div>
   <!-- elemento della lista -->
   <script id="entry_film" type="text/x-handlebars-template">
-  <li class="entry_film" data_id={{id}}>
+  <li class="entry_film" data_id={{id}} data_type={{type}}>
     <div class="image">
       <img src="{{image_src}}" alt="">
     </div>
@@ -68,7 +68,7 @@
   <!-- elementi del cast -->
   <script id="entry_cast" type="text/x-handlebars-template">
   <li class="entry_cast">
-    <span>{{name}}{{character}}</span>
+    <img src="{{img_src}}" alt=""><span>{{name}}{{character}}</span>
   </li>
   </script>
 

@@ -138,10 +138,20 @@ main{
   color: white;
   font-weight: 700;
 }
+.description_cast li:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+.description_cast li img{
+  width: 45px;
+  float: left;
+  margin: 3px 0;
+}
+
 .entry_film:hover > .description{
   display: block;
   cursor: pointer;
-  /* filter: opacity(.5); */
 }
 
 .modal{

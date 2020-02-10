@@ -28,9 +28,10 @@ $(document).ready(function() {
   // ricerca cast
   $(document).on('click', '#search_cast_btn', function () {
     $('.description_cast').html('');
-    var id_film = $(this).parents('li').attr('data_id');
     var elementCast = $(this);
-    searchCast(elementCast, id_film);
+    var id_film = $(this).parents('li').attr('data_id');
+    var type = $(this).parents('li').attr('data_type');
+    searchCast(elementCast, type, id_film);
   });
 
 });
@@ -64,7 +65,7 @@ function search() {
             var html = template(context);
             $('.error_dialog').append(html);
           }else {
-            elementPrint('Film',filmArray);
+            elementPrint('movie',filmArray);
           }
         },
         error : function(error) {
@@ -94,7 +95,7 @@ function search() {
             var html = template(context);
             $('.error_dialog').append(html);
           }else {
-            elementPrint('Serie TV', tvArray);
+            elementPrint('tv', tvArray);
           }
         },
         error : function(error) {
@@ -114,14 +115,14 @@ function search() {
   }
 
 }
-function searchCast(thisElement, id) {
+function searchCast(thisElement, type, id) {
   // preparo il messaggio di errore, nel caso servisse
   var source = $('#error_dialog').html();
   var template = Handlebars.compile(source);
   $.ajax(
     {
       // url : 'https://api.themoviedb.org/3/movie/4556/credits',
-      url : 'https://api.themoviedb.org/3/movie/'+id+'/credits',
+      url : 'https://api.themoviedb.org/3/'+type+'/'+id+'/credits',
       method: 'GET',
       data : {
         api_key : 'f4cb5d5e967d170cb7a067b541e15041',
@@ -183,11 +184,11 @@ function elementPrint(type, array) {
 
     var context = {
       id: element.id,
+      type: type,
       image_src: image_src,
       title: element.title || element.name,
       original_title: element.original_title || element.name,
       original_language: language,
-      gender: type,
       overview: element.overview,
       vote_average: printStars(element.vote_average),
      };
@@ -205,7 +206,15 @@ function castPrint(thisElement, array) {
   // ciclo
   for (var i = 0; i < 5; i++) {
     var element = array[i];
+
+    var image_src = 'https://image.tmdb.org/t/p/w45/'+element.profile_path;
+    // Gestisco immagine 'null'
+    if (element.profile_path == null) {
+      image_src = 'img/sorry-image-not-available.jpg'
+    };
+
     var context = {
+      img_src : image_src,
       name : element.name,
       character : ' nel personaggio di ' + element.character,
      };
