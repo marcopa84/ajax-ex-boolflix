@@ -20,6 +20,11 @@ header button {
   padding: 10px;
   border-radius: 5px;
 }
+header input, header select{
+  height: 40px;
+  vertical-align: middle;
+  text-align: center;
+}
 header .search{
   display: flex;
   flex-grow: 3;
@@ -33,7 +38,9 @@ header .search{
   justify-content: center;
   align-items: center;
 }
-
+#genres{
+  max-width: 150px;
+}
 .search button{
   margin: 0 20px;
 }
