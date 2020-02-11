@@ -8,7 +8,7 @@ $(document).ready(function() {
     clean();
   });
   // ricerca con invio
-  $('#search_val').keypress(    function () {
+  $('#search_val').keypress(function () {
       if (event.which == 13 || event.keyCode == 13){
         $('.error_dialog').slideUp();
         $('.error_dialog').html('');
@@ -38,7 +38,6 @@ $(document).ready(function() {
   $(document).on('click', '#filter_btn', function () {
     // $('.filters_select').addClass('active_filters_select');
     $('#genres').show();
-    $('#genres').append('<option value="all">All</option>');
   });
   // filtro sul genere
   $('#genres').change(function() {
@@ -139,9 +138,7 @@ function searchCast(thisElement, type, id) {
         api_key : 'f4cb5d5e967d170cb7a067b541e15041',
       },
       success : function (data) {
-        console.log(data);
         var castArray = data.cast;
-        console.log(castArray);
         // gestisco errori
         if (castArray.length == 0) {
           $('.error_dialog').slideDown();
@@ -170,11 +167,14 @@ function searchCast(thisElement, type, id) {
 function filter(select) {
   $('.entry_film').each(function() {
     var genre = $(this).attr('data_genres');
+    var genreArraySplitted = genre.split(",");
     $(this).hide();
-    if (genre == select) {
-      $(this).show();
-    }else if (select == 'all') {
-      $('.entry_film').show();
+    for (var i = 0; i < genreArraySplitted.length; i++) {
+      if (genreArraySplitted[i] == select) {
+        $(this).show();
+      }else if (select == 'all') {
+        $('.entry_film').show();
+      }
     }
   });
 }
@@ -229,7 +229,6 @@ function getGenres2(genres) {
             genres.push(element);
           }
         }
-        // counterGenres(genres);
         printGenres(genres);
       },
       error : function(error) {
@@ -244,30 +243,8 @@ function getGenres2(genres) {
     }
   );
 }
-
-// counter genres
-// function counterGenres(genres) {
-//    $('.entry_film').each(
-//    function () {
-//      var value=$(this).attr('data_genres');
-//      for (var i = 0; i < genres.length; i++) {
-//        if (value == genres[i].id) {
-//          console.log('counter aggiunto');
-//          genres[i] = {
-//            id : genres[i].id,
-//            name: genres[i].name,
-//            counter : +1,
-//          }
-//        }
-//      }
-//    }
-//  );
-//  console.log(genres);
-//  printGenres(genres);
-// }
 // popolamento generi select
 function printGenres(genres) {
-  console.log(genres);
   var source = $('#entry_select').html();
   var template = Handlebars.compile(source);
 
@@ -275,23 +252,16 @@ function printGenres(genres) {
     var context = {
       value_id : genres[i].id,
       value: genres[i].name,
-      // counter : genres[i].counter,
-      // counter : '('+genres[i].counter+')'
      }
-    console.log(context);
     var html = template(context);
     $('#genres').append(html);
-    console.log($('#genres'));
-    console.log('genero select');
   }
 }
-
 // stampa elementi
 function elementPrint(type, array) {
   // clono il <li>
   var source = $('#entry_film').html();
   var template = Handlebars.compile(source);
-
   // ciclo
   for (var i = 0; i < array.length; i++) {
     var element = array[i];
@@ -323,7 +293,26 @@ function elementPrint(type, array) {
      // appendo il <li> popolato
     var html = template(context);
     $('.results_list').append(html);
+    genresCounter(element.genre_ids);
   }
+}
+// counter genres
+function genresCounter(arrayGeneriSchede) {
+  // console.log(arrayGeneriSchede);
+  $('#genres').find('option').each(
+    function() {
+      var optionValue = $(this).val();
+      // console.log(optionValue);
+      for (var i = 0; i < arrayGeneriSchede.length; i++) {
+        var counter = 0;
+        if (arrayGeneriSchede[i] == optionValue) {
+          counter = '&hearts;'	;
+          $(this).append(counter);
+        }
+
+      }
+    }
+  );
 }
 // stampa element cast
 function castPrint(thisElement, array) {
