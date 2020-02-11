@@ -35,31 +35,19 @@ $(document).ready(function() {
   });
   //generazione filtri
   $(document).on('click', '#filter_btn', function () {
-    getGenres1();
-    $('.filters_select').addClass('active_filters_select');
+    // $('.filters_select').addClass('active_filters_select');
+    $('#genres').show();
     $('#genres').html('');
-    $('#genres').html('<option value=" ">All</option>');
+    $('#genres').html('<option value="all">All</option>');
   });
+  // filtro sul genere
   $('#genres').change(function() {
-
     var genresSelected = $(this).val();
-    // $('.entry_film').hide();
-
-    $('.entry_film').each(function() {
-      var genre = $(this).attr('data_genres');
-      console.log(genre);
-      if (genre != genresSelected) {
-        $(this).hide();
-      }else{
-        $(this).show();
-      }
-      ;
-    });
-
+    filter(genresSelected);
   });
 
 });
-
+// funzione ricerca film e serie tv
 function search() {
   $('.start').remove();
   // preparo il messaggio di errore, nel caso servisse
@@ -138,6 +126,7 @@ function search() {
   }
 
 }
+// funzione ricerca del cast
 function searchCast(thisElement, type, id) {
   // preparo il messaggio di errore, nel caso servisse
   var source = $('#error_dialog').html();
@@ -177,7 +166,19 @@ function searchCast(thisElement, type, id) {
     }
   );
 }
-// creazione generi
+// filtro schede
+function filter(select) {
+  $('.entry_film').each(function() {
+    var genre = $(this).attr('data_genres');
+    $(this).hide();
+    if (genre == select) {
+      $(this).show();
+    }else if (select == 'all') {
+      $('.entry_film').show();
+    }
+  });
+}
+// creazione generi in due steps parte alla stampa dei film
 function getGenres1() {
   var genres = [];
   $.ajax(
@@ -197,7 +198,7 @@ function getGenres1() {
       error : function(error) {
         $('.error_dialog').slideDown();
         var context = {
-          error: 'Nessun genere al momento disponibile in'+' '+ type,
+          error: 'Nessun genere al momento disponibile in movie',
          };
         var html = template(context);
         $('.error_dialog').append(html);
@@ -216,11 +217,6 @@ function getGenres2(genres) {
       },
       success : function (data) {
         var array2 = data.genres
-        // for (var i = 0; i < array2.length; i++) {
-        //   if (!genres.includes(array2[i].id)) {
-        //     genres.push(array2[i]);
-        //   }
-        // }
         for (var i = 0; i < array2.length; i++) {
           var element = array2[i]
           var find= false;
@@ -233,14 +229,13 @@ function getGenres2(genres) {
             genres.push(element);
           }
         }
-        // console.log(genres);
+        // counterGenres(genres);
         printGenres(genres);
-        return (genres);
       },
       error : function(error) {
         $('.error_dialog').slideDown();
         var context = {
-          error: 'Nessun genere al momento disponibile in'+' '+ type,
+          error: 'Nessun genere al momento disponibile in serie TV',
          };
         var html = template(context);
         $('.error_dialog').append(html);
@@ -249,6 +244,27 @@ function getGenres2(genres) {
     }
   );
 }
+
+// counter genres
+// function counterGenres(genres) {
+//    $('.entry_film').each(
+//    function () {
+//      var value=$(this).attr('data_genres');
+//      for (var i = 0; i < genres.length; i++) {
+//        if (value == genres[i].id) {
+//          console.log('counter aggiunto');
+//          genres[i] = {
+//            id : genres[i].id,
+//            name: genres[i].name,
+//            counter : +1,
+//          }
+//        }
+//      }
+//    }
+//  );
+//  console.log(genres);
+//  printGenres(genres);
+// }
 // popolamento generi select
 function printGenres(genres) {
   console.log(genres);
@@ -258,9 +274,12 @@ function printGenres(genres) {
     var context = {
       value_id : genres[i].id,
       value: genres[i].name,
-     };
+      // counter : genres[i].counter,
+      // counter : '('+genres[i].counter+')'
+     }
     var html = template(context);
     $('#genres').append(html);
+    console.log('genero');
   }
 }
 
@@ -302,6 +321,7 @@ function elementPrint(type, array) {
     var html = template(context);
     $('.results_list').append(html);
   }
+  getGenres1();
 }
 // stampa element cast
 function castPrint(thisElement, array) {
