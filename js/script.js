@@ -1,5 +1,11 @@
 $(document).ready(function() {
-  getGenres1();
+  // getGenres1();
+  $('#search_val').focusin(
+      function () {
+        getGenres1();
+      }
+    );
+
   // Ricerca con bottone
   $(document).on('click', '#search_btn', function () {
     $('.error_dialog').slideUp();
@@ -175,6 +181,8 @@ function filter(select) {
 }
 // creazione generi in due steps parte alla stampa dei film
 function getGenres1() {
+  $('#genres').html("<option value="+'all'+">All</option>");
+
   var genres = [];
   $.ajax(
     {

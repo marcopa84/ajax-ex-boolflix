@@ -39,7 +39,7 @@ header .search{
   align-items: center;
 }
 #genres{
-  max-width: 150px;
+  width: 170px;
 }
 .search button{
   margin: 0 20px;
