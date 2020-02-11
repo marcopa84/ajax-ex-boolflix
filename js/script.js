@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  getGenres1();
   // Ricerca con bottone
   $(document).on('click', '#search_btn', function () {
     $('.error_dialog').slideUp();
@@ -37,8 +38,7 @@ $(document).ready(function() {
   $(document).on('click', '#filter_btn', function () {
     // $('.filters_select').addClass('active_filters_select');
     $('#genres').show();
-    $('#genres').html('');
-    $('#genres').html('<option value="all">All</option>');
+    $('#genres').append('<option value="all">All</option>');
   });
   // filtro sul genere
   $('#genres').change(function() {
@@ -270,6 +270,7 @@ function printGenres(genres) {
   console.log(genres);
   var source = $('#entry_select').html();
   var template = Handlebars.compile(source);
+
   for (var i = 0; i < genres.length; i++) {
     var context = {
       value_id : genres[i].id,
@@ -277,9 +278,11 @@ function printGenres(genres) {
       // counter : genres[i].counter,
       // counter : '('+genres[i].counter+')'
      }
+    console.log(context);
     var html = template(context);
     $('#genres').append(html);
-    console.log('genero');
+    console.log($('#genres'));
+    console.log('genero select');
   }
 }
 
@@ -321,7 +324,6 @@ function elementPrint(type, array) {
     var html = template(context);
     $('.results_list').append(html);
   }
-  getGenres1();
 }
 // stampa element cast
 function castPrint(thisElement, array) {
