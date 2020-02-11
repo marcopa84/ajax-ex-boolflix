@@ -34,11 +34,6 @@ $(document).ready(function() {
     var type = $(this).parents('li').attr('data_type');
     searchCast(elementCast, type, id_film);
   });
-  //generazione filtri
-  $(document).on('click', '#filter_btn', function () {
-    // $('.filters_select').addClass('active_filters_select');
-    $('#genres').show();
-  });
   // filtro sul genere
   $('#genres').change(function() {
     var genresSelected = $(this).val();
